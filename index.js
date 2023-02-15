@@ -25,37 +25,7 @@ export class GocardlessCppCompliance extends HTMLElement {
     }
     connectedCallback(){
         console.log('GocardlessCppCompliance added to DOM');
-
-        loadParseScript()
-            .catch(() => console.error("Something went wrong"))
-            .then(() => {
-                Parse.initialize("5ToyUqtnmb507Nq92yVG997ecJLC4ZM3awSb9jRG","WdsZjGD5xBZk6TeHpS6XLNHgiiuAAyM1TBmEwonG");
-                Parse.serverURL = 'https://parseapi.back4app.com/'
-                log()
-            });
     }
 }
 
 window.customElements.define('gocardless-cpp-compliance', GocardlessCppCompliance);
-
-async function log() {
-    const logRecord = new Parse.Object("logs");
-    logRecord.set("type", "web-component");
-    logRecord.set("source", "App");
-    try {
-        let result = await logRecord.save()
-        alert('New object created with objectId: ' + result.id);
-    } catch(error) {
-        alert('Failed to create new object, with error code: ' + error.message);
-    }
-}
-
-function loadParseScript() {
-    return new Promise(function (resolve, reject) {
-        const parseScript = document.createElement('script');  
-        parseScript.setAttribute('src','https://npmcdn.com/parse/dist/parse.min.js');
-        parseScript.onload = resolve;
-        parseScript.onerror = reject;
-        document.head.appendChild(parseScript);
-    });
-}
